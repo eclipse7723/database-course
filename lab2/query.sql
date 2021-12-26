@@ -1,16 +1,16 @@
 -- вивести назву пива, броварні, сорт, міцність та місто виробника
-SELECT b.name AS "Beer", s.name AS "Style", bb.name AS "Brewery",
+SELECT TRIM(b.name) AS "Beer", TRIM(s.name) AS "Style", TRIM(bb.name) AS "Brewery",
        b.abv AS "Alcohol by volume", loc.city AS "City"
 	FROM Beers AS b
         LEFT JOIN Breweries AS bb	ON b.brewery_id = bb.brewery_id
         LEFT JOIN Locations AS loc	ON bb.loc_id = loc.loc_id
         LEFT JOIN Styles AS s	ON b.style_id = s.style_id;
 
--- 3а - розподілення міцності пива;
+-- 3а - розподілення міцності пива
 SELECT COUNT(b.abv) AS "Count", b.abv AS "Alcohol by volume"
 	FROM Beers AS b GROUP BY b.abv ORDER BY COUNT(b.abv) DESC;
 
--- 3б - кількість внесеного пива в кожному місті;
+-- 3б - кількість внесеного пива в кожному місті
 SELECT COUNT(loc.city) as "Count", loc.city as "City"
     FROM Beers as b
         LEFT JOIN Breweries AS bb	ON b.brewery_id = bb.brewery_id
