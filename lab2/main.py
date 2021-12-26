@@ -18,5 +18,40 @@ def login():
         return connect
 
 
-with login() as connect:
-    input("1231231")
+def execute_sql(cursor, path, specific=None, log=False):
+    abs_path = os.path.abspath(path)
+    if os.path.exists(path) is False:
+        print(f"<!> login failure: incorrect path to query: {abs_path!r}")
+        return
+    if path.endswith(".sql") is False:
+        print(f"<!> input file must be .sql, not {path!r}")
+        return
+
+    values = []
+    with open(path, 'r') as f:
+        text = f.read()
+        sql_commands = text.split(';')
+        for i, com in enumerate(sql_commands):
+            if isinstance(specific, int) and i != specific:
+                continue
+            try:
+                if log: print(f"  * execute next:\n{com}")
+                cursor.execute(com)
+                values = cursor.fetchall()
+
+                fn = lambda x: x.strip() if isinstance(x, str) else x
+                if log: print(f"  * output:")
+                for row in values:
+                    if log: print(list(map(fn, row)))
+            except Exception as e:
+                print(f"... something went wrong (may be invalid query): {e}")
+                continue
+        return values
+
+
+if __name__ == "__main__":
+    with login() as connect:
+        cur = connect.cursor()
+        execute_sql(cur, "create.sql")
+        execute_sql(cur, "populate.sql")
+        execute_sql(cur, "query.sql", 0)
