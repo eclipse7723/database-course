@@ -11,7 +11,7 @@ SELECT COUNT(b.abv) AS "Count", b.abv AS "Alcohol by volume"
 	FROM Beers AS b GROUP BY b.abv ORDER BY COUNT(b.abv) DESC;
 
 -- 3б - кількість внесеного пива в кожному місті
-SELECT COUNT(loc.city) as "Count", loc.city as "City"
+SELECT COUNT(loc.city) as "Count", TRIM(loc.city) as "City"
     FROM Beers as b
         LEFT JOIN Breweries AS bb	ON b.brewery_id = bb.brewery_id
         LEFT JOIN Locations AS loc	ON bb.loc_id = loc.loc_id
