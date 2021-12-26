@@ -18,6 +18,6 @@ SELECT COUNT(loc.city) as "Count", TRIM(loc.city) as "City"
     GROUP BY loc.city ORDER BY COUNT(loc.city) DESC;
 
 -- 3в. залежність міцності пива від сорту (стиль)
-SELECT COUNT(b.abv) AS "Count", ROUND(AVG(b.abv)::numeric, 2) AS "Average alcohol by volume", s.name AS "Style"
+SELECT COUNT(b.abv) AS "Count", ROUND(AVG(b.abv)::numeric, 2) AS "Average alcohol by volume", TRIM(s.name) AS "Style"
 	FROM Beers AS b LEFT JOIN Styles AS s	ON b.style_id = s.style_id
 	GROUP BY s.style_id ORDER BY COUNT(b.abv) DESC;
