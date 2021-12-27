@@ -42,8 +42,8 @@ CREATE TABLE Locations
 (
     loc_id      int         NOT NULL UNIQUE ,
     country     char(32)    NOT NULL ,
-    state       char(32)    NULL ,
-    city        char(32)    NULL
+    state       char(8)    NULL ,
+    city        char(64)    NULL
 );
 
 CREATE TABLE Types
