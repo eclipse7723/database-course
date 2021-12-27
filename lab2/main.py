@@ -40,6 +40,8 @@ def execute_sql(cursor, path, specific=None, log=False):
                 values = cursor.fetchall()
 
                 fn = lambda x: x.strip() if isinstance(x, str) else x
+                if values is None:
+                    return
                 if log: print(f"  * output:")
                 for row in values:
                     if log: print(list(map(fn, row)))
