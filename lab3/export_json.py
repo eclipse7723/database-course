@@ -22,5 +22,5 @@ with login() as connect:
         export[table_name] = rows
 
 
-with open("export\\database.json", "w", encoding='cp850') as f:
+with open("export\\database.json", "w") as f:
     json.dump(export, f)

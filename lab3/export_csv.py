@@ -13,7 +13,7 @@ with login() as connect:
         cursor.execute("SELECT * FROM %s" % table_name)
 
         columns = [col[0] for col in cursor.description]
-        with open("export\\%s.csv" % table_name, "w", encoding='cp850', newline='') as f:
+        with open("export\\%s.csv" % table_name, "w", newline='') as f:
             writer = csv.writer(f)
             writer.writerow(columns)
             for row in cursor:
