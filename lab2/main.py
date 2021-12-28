@@ -35,7 +35,7 @@ def execute_sql(cursor, path, specific=None, log=False):
             if isinstance(specific, int) and i != specific:
                 continue
             try:
-                if log: print(f"  * execute next:\n{com}")
+                if log: print(f"  * execute:\n{com}")
                 cursor.execute(com)
                 values = cursor.fetchall()
 
@@ -46,7 +46,7 @@ def execute_sql(cursor, path, specific=None, log=False):
                 for row in values:
                     if log: print(list(map(fn, row)))
             except Exception as e:
-                print(f"... something went wrong (may be invalid query): {e}")
+                if log: print(f"... something went wrong (may be invalid query): {e}")
                 continue
         return values
 
@@ -56,4 +56,4 @@ if __name__ == "__main__":
         cur = connect.cursor()
         execute_sql(cur, "create.sql")
         execute_sql(cur, "populate.sql")
-        execute_sql(cur, "query.sql", 0)
+        execute_sql(cur, "query.sql", specific=0, log=True)
