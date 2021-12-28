@@ -1,8 +1,13 @@
-CREATE OR REPLACE FUNCTION get_random_abv()
-    RETURNS double precision AS
+CREATE OR REPLACE FUNCTION who_made_this_beer(beer_name text)
+    RETURNS text AS
     $$
         DECLARE
+            potential_brewery text;
         BEGIN
-           RETURN ROUND((Random()+3.5)::numeric, 1);
+            SELECT brewery
+                INTO potential_brewery
+                FROM all_beers
+                WHERE beer LIKE CONCAT('%', beer_name, '%');
+            RETURN potential_brewery;
         END;
     $$ LANGUAGE 'plpgsql';

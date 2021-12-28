@@ -17,9 +17,9 @@ CALL beers_by_style('Lager');
  */
 
 -- function test
-SELECT get_random_abv() AS "abv";
+SELECT who_made_this_beer('Russian Kvass');
 /*   Output:
-     4.3
+     "Beavertown Brewery"
  */
 
 -- trigger test
