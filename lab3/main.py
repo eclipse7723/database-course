@@ -6,6 +6,11 @@ if __name__ == "__main__":
     with login() as connect:
         cursor = connect.cursor()
 
+        # setup views
+        with open("create.sql", "r") as f:
+            view_command = f.read()
+            cursor.execute(view_command)
+
         queries = [
             "SELECT * FROM abv_count",
             "SELECT * FROM city_count",
