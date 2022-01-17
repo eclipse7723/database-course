@@ -2,6 +2,15 @@ from lab2.main import login
 import matplotlib.pyplot as plt
 
 
+def get_correct_pairs(values):
+    new_values = []
+    for pair in values:
+        if None in pair:
+            continue
+        new_values.append(pair)
+    return new_values
+
+
 if __name__ == "__main__":
     with login() as connect:
         cursor = connect.cursor()
@@ -20,6 +29,7 @@ if __name__ == "__main__":
         # -- 3а - розподілення міцності пива - стовпчкова
         cursor.execute(queries[0])
         values = cursor.fetchall()
+        values = get_correct_pairs(values)
         plt.bar([v[0] for v in values], [v[1] for v in values])
         plt.ylabel("alcohol by volume")
         plt.xlabel("count")
@@ -29,6 +39,7 @@ if __name__ == "__main__":
         # -- 3б - кількість внесеного пива в кожному місті
         cursor.execute(queries[1])
         values = cursor.fetchall()
+        values = get_correct_pairs(values)
         plt.pie(x=[v[0] for v in values], labels=[v[1] for v in values], autopct="%.1f%%")
         plt.savefig("img/3b.png")
         plt.show()
@@ -36,6 +47,7 @@ if __name__ == "__main__":
         # -- 3в. залежність міцності пива від сорту (стиль)
         cursor.execute(queries[2])
         values = cursor.fetchall()
+        values = get_correct_pairs(values)
         abv = [v[1] for v in values]
         sorts = [v[2] for v in values]
         xs = range(len(abv))
